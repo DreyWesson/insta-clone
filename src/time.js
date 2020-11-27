@@ -1,4 +1,4 @@
-function formatDate(date = new Date(), formatType = "nothing") {
+function formatDate(date = new Date(), formatType = "timeSince") {
   let hours = date.getHours(),
     minutes = date.getMinutes(),
     weekDay = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
@@ -26,7 +26,7 @@ function formatDate(date = new Date(), formatType = "nothing") {
   day = weekDay[date.getDay()];
   let month = monthName[date.getMonth()];
 
-  // if the date is TODAY display only time else displat DAY,DATE
+  // if the date is TODAY display only time else display DAY,DATE
   let isToday = () => {
     switch (formatType) {
       case "time&date":
@@ -40,11 +40,54 @@ function formatDate(date = new Date(), formatType = "nothing") {
         return `${strTime} • Today`;
       case "checkIfToday":
         return `${date.getDate()}•${month}•${date.getFullYear()}`;
-      default:
+
+      case "longTime":
         // Sat 14 Nov, 2020
         return `${day} ${date.getDate()} ${month}, ${date.getFullYear()}`;
+      default:
+        // 20mins ago
+        return timeSince(date);
     }
   };
+
+  function timeSince(date) {
+    let seconds = Math.floor((new Date() - date) / 1000),
+      interval = seconds / 31536000;
+
+    if (interval >= 1) {
+      return Math.floor(interval) > 1
+        ? Math.floor(interval) + " years ago"
+        : Math.floor(interval) + " year ago";
+    }
+    interval = seconds / 2592000;
+    if (interval >= 1) {
+      return Math.floor(interval) > 1
+        ? Math.floor(interval) + " months ago"
+        : Math.floor(interval) + " month ago";
+    }
+    interval = seconds / 86400;
+    if (interval >= 1) {
+      return Math.floor(interval) > 1
+        ? Math.floor(interval) + " days ago"
+        : Math.floor(interval) + " day ago";
+    }
+    interval = seconds / 3600;
+    if (interval >= 1) {
+      return Math.floor(interval) > 1
+        ? Math.floor(interval) + " hours ago"
+        : Math.floor(interval) + " hour ago";
+    }
+    interval = seconds / 60;
+    if (interval >= 1) {
+      return Math.floor(interval) > 1
+        ? Math.floor(interval) + " minutes ago"
+        : Math.floor(interval) + " minute ago";
+    }
+    return Math.floor(interval) > 1
+      ? Math.floor(seconds) + " seconds ago"
+      : Math.floor(seconds) + " seconds ago";
+  }
+
   return isToday();
 }
 

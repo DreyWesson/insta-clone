@@ -36,8 +36,8 @@ const Posts = ({ postId, username, imageUrl, caption, user, timestamp }) => {
   const slotInTime = (time) => {
     return formatDate(new Date(), "checkIfToday") ===
       formatDate(time, "checkIfToday")
-      ? formatDate(time, "isToday")
-      : formatDate(time);
+      ? formatDate(time, "whenVsNow")
+      : formatDate(time, "longTime");
   };
 
   return (

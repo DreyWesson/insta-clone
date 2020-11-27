@@ -37,10 +37,11 @@ const ImageUpload = ({ username }) => {
               imageUrl: url,
               username: username,
             });
-          });
-        setImage(null);
-        setProgress(0);
-        setCaption("");
+            setImage(null);
+            setProgress(0);
+            setCaption("");
+          })
+          .catch((err) => alert(err.message));
       }
     );
   };

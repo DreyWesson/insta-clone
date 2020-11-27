@@ -157,7 +157,7 @@ function App() {
         </div>
       )}
       <div className="app__posts">
-        {user?.displayName ? (
+        {user ? (
           <ImageUpload username={user.displayName} />
         ) : (
           <h3 className="app__notLoggedIn">Sign Up To Upload</h3>

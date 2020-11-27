@@ -1,4 +1,4 @@
-function formatDate(date, formatType = "nothing") {
+function formatDate(date = new Date(), formatType = "nothing") {
   let hours = date.getHours(),
     minutes = date.getMinutes(),
     weekDay = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],

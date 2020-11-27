@@ -59,18 +59,18 @@ const Posts = ({ postId, username, imageUrl, caption, user }) => {
             ) : (
               console.log(comments.length)
             )}
-            {comments.map((comment) => (
+            {comments?.map((comment) => (
               <div className="post__commentContainer">
                 <p key={Math.random() * 1000} className="post__comment">
                   <strong>{comment.username}: </strong> {comment.text}
                 </p>
                 <small>
-                  {formatDate(new Date(), "checkIfToday") ===
-                  formatDate(comment.timestamp?.toDate(), "checkIfToday")
+                  {comment.timestamp &&
+                  formatDate(new Date(), "checkIfToday") ===
+                    formatDate(comment.timestamp?.toDate(), "checkIfToday")
                     ? formatDate(comment.timestamp?.toDate(), "isToday")
                     : formatDate(comment.timestamp?.toDate())}
-                  {/* {", "}
-                  {comment.timestamp?.toDate().toDateString()} */}
+                  {/* {comment.timestamp?.toDate().toDateString()} */}
                 </small>
               </div>
             ))}

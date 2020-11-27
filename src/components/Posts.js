@@ -58,14 +58,11 @@ const Posts = ({ postId, username, imageUrl, caption, user, timestamp }) => {
 
           <div className="post__icons">
             <div className="post__iconsGrouped">
-              <FavoriteBorderOutlined fontSize="large" className="post__icon" />
-              <ChatBubbleOutlineOutlined
-                fontSize="large"
-                className="post__icon"
-              />
-              <SendOutlined fontSize="large" className="post__icon" />
+              <FavoriteBorderOutlined className="post__icon" />
+              <ChatBubbleOutlineOutlined className="post__icon" />
+              <SendOutlined className="post__icon" />
             </div>
-            <BookmarkBorderOutlined fontSize="large" className="post__icon" />
+            <BookmarkBorderOutlined className="post__icon" />
           </div>
 
           <div className="post__content">

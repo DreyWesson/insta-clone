@@ -162,12 +162,13 @@ function App() {
         ) : (
           <h3>Sorry, you need to Login</h3>
         )}
-        {posts.map(({ id, username, imageUrl, caption }) => {
+        {posts.map(({ id, username, imageUrl, caption, timestamp }) => {
           return (
             <Posts
               key={id}
               postId={id}
               user={user}
+              timestamp={timestamp}
               username={username}
               imageUrl={imageUrl}
               caption={caption}

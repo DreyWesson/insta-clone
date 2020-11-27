@@ -10,9 +10,18 @@
   object-fit: contain;
   border-top: 1px solid lightgray;
 }
-.post__text {
+.post__content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.post__contentText {
   font-weight: normal;
   padding: 15px 10px;
+}
+.post__contentTime {
+  padding-right: 10px;
+  color: gray;
 }
 .post__header {
   display: flex;

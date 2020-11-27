@@ -19,7 +19,7 @@ const ImageUpload = ({ username }) => {
       "state_changed",
       (snapshot) => {
         const progressReport = Math.round(
-          (snapshot.bytesTransferred / snapshot.totalBytes) * 10
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
         );
         setProgress(progressReport);
       },
@@ -37,10 +37,10 @@ const ImageUpload = ({ username }) => {
               imageUrl: url,
               username: username,
             });
-            setProgress(0);
-            setCaption("");
-            setImage(null);
           });
+        setImage(null);
+        setProgress(0);
+        setCaption("");
       }
     );
   };
@@ -56,7 +56,7 @@ const ImageUpload = ({ username }) => {
         className="imageUpload__caption"
         type="text"
         placeholder="Enter a caption..."
-        // value={caption}
+        value={caption}
         onChange={(e) => setCaption(e.target.value)}
       />
       <progress

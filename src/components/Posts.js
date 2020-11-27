@@ -5,7 +5,7 @@ import db from "../firebase";
 import "./Posts.css";
 import formatDate from "../time";
 
-const Posts = ({ postId, username, imageUrl, caption, user }) => {
+const Posts = ({ postId, username, imageUrl, caption, user, timestamp }) => {
   const [comments, setComments] = useState([]);
   const [comment, setComment] = useState("");
 
@@ -33,12 +33,12 @@ const Posts = ({ postId, username, imageUrl, caption, user }) => {
     });
     setComment("");
   };
-  // let getTime = comments.map(
-  //   (comment) => formatDate(comment.timestamp?.toDate()),
-  //   "date"
-  // );
-  // console.log(getTime);
-  // formatDate(new Date(), "check");
+  const slotInTime = (time) => {
+    return formatDate(new Date(), "checkIfToday") ===
+      formatDate(time, "checkIfToday")
+      ? formatDate(time, "isToday")
+      : formatDate(time);
+  };
 
   return (
     <>
@@ -49,9 +49,14 @@ const Posts = ({ postId, username, imageUrl, caption, user }) => {
             <h3>{username}</h3>
           </div>
           <img className="post__image" src={imageUrl} alt="" />
-          <h4 className="post__text">
-            <strong>{username}:</strong> {caption}
-          </h4>
+          <div className="post__content">
+            <h4 className="post__contentText">
+              <strong>{username}:</strong> {caption}
+            </h4>
+            <small className="post__contentTime">
+              {slotInTime(timestamp?.toDate())}
+            </small>
+          </div>
 
           <div className="post__comments">
             {comments.length > 0 ? (
@@ -65,11 +70,7 @@ const Posts = ({ postId, username, imageUrl, caption, user }) => {
                   <strong>{comment.username}: </strong> {comment.text}
                 </p>
                 <small>
-                  {comment.timestamp &&
-                  formatDate(new Date(), "checkIfToday") ===
-                    formatDate(comment.timestamp?.toDate(), "checkIfToday")
-                    ? formatDate(comment.timestamp?.toDate(), "isToday")
-                    : formatDate(comment.timestamp?.toDate())}
+                  {comment.timestamp && slotInTime(comment.timestamp?.toDate())}
                   {/* {comment.timestamp?.toDate().toDateString()} */}
                 </small>
               </div>

@@ -4,6 +4,12 @@ import firebase from "firebase";
 import db from "../firebase";
 import "./Posts.css";
 import formatDate from "../time";
+import {
+  BookmarkBorderOutlined,
+  ChatBubbleOutlineOutlined,
+  FavoriteBorderOutlined,
+  SendOutlined,
+} from "@material-ui/icons";
 
 const Posts = ({ postId, username, imageUrl, caption, user, timestamp }) => {
   const [comments, setComments] = useState([]);
@@ -49,6 +55,19 @@ const Posts = ({ postId, username, imageUrl, caption, user, timestamp }) => {
             <h3>{username}</h3>
           </div>
           <img className="post__image" src={imageUrl} alt="" />
+
+          <div className="post__icons">
+            <div className="post__iconsGrouped">
+              <FavoriteBorderOutlined fontSize="large" className="post__icon" />
+              <ChatBubbleOutlineOutlined
+                fontSize="large"
+                className="post__icon"
+              />
+              <SendOutlined fontSize="large" className="post__icon" />
+            </div>
+            <BookmarkBorderOutlined fontSize="large" className="post__icon" />
+          </div>
+
           <div className="post__content">
             <h4 className="post__contentText">
               <strong>{username}:</strong> {caption}

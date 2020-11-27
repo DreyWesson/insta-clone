@@ -39,7 +39,7 @@
   padding: 10px;
 }
 .post__inputSignup {
-  flex: 0.6;
+  flex: 0.7;
   outline-width: 0;
   border: none;
   border-top: 1px solid lightgray;
@@ -74,7 +74,7 @@
 }
 
 .post__buttonSignup {
-  flex: 0.4;
+  flex: 0.3;
   border: none;
   color: dodgerblue;
   background-color: transparent;
@@ -88,5 +88,16 @@
 }
 .post__commentContainer > small {
   color: lightgray;
+  padding-right: 10px;
+}
+
+.post__icons {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 10px 0px;
+  color: rgb(38, 38, 38);
+}
+.post__icon {
   padding-right: 10px;
 }

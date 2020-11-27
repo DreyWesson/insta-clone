@@ -12,13 +12,72 @@
 }
 .post__text {
   font-weight: normal;
-  padding: 20px;
+  padding: 15px 10px;
 }
 .post__header {
   display: flex;
   align-items: center;
-  padding: 20px;
+  padding: 10px;
 }
 .post__avatar {
   margin-right: 15px;
+}
+.post__input {
+  flex: 0.9;
+  outline-width: 0;
+  border: none;
+  border-top: 1px solid lightgray;
+  padding: 10px;
+}
+.post__inputSignup {
+  flex: 0.6;
+  outline-width: 0;
+  border: none;
+  border-top: 1px solid lightgray;
+  padding: 10px;
+}
+.post__commentBox {
+  display: flex;
+  margin-top: 10px;
+}
+.post__button {
+  flex: 0.1;
+  border: none;
+  color: dodgerblue;
+  background-color: transparent;
+  border-top: 1px solid lightgray;
+}
+
+.post__commentsHeader {
+  border-top: 1px solid lightgray;
+  border-bottom: 1px solid lightgray;
+  padding: 5px 10px;
+  font-weight: normal;
+}
+.post__comment {
+  flex: 1;
+  padding: 3px 10px;
+  color: gray;
+}
+.post__comment > strong {
+  color: #000;
+  font-size: 14px;
+}
+
+.post__buttonSignup {
+  flex: 0.4;
+  border: none;
+  color: dodgerblue;
+  background-color: transparent;
+  border-top: 1px solid lightgray;
+}
+
+.post__commentContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.post__commentContainer > small {
+  color: lightgray;
+  padding-right: 10px;
 }

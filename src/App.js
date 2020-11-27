@@ -18,7 +18,9 @@ function App() {
     [openSignIn, setOpenSignIn] = useState(false),
     [user, setUser] = useState(null),
     [password, setPassword] = useState(""),
-    classes = useStyles();
+    classes = useStyles(),
+    { REACT_APP_CLIENT_TOKEN, REACT_APP_ID } = process.env,
+    merge = `${REACT_APP_ID}|${REACT_APP_CLIENT_TOKEN}`;
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((authUser) => {
@@ -80,18 +82,21 @@ function App() {
               />
             </center>
             <Input
+              className="app__inputs"
               type="text"
               placeholder="Username"
               onChange={(e) => setUsername(e.target.value)}
               value={username}
             />
             <Input
+              className="app__inputs"
               type="email"
               placeholder="Email"
               onChange={(e) => setEmail(e.target.value)}
               value={email}
             />
             <Input
+              className="app__inputs"
               type="password"
               placeholder="Password"
               onChange={(e) => setPassword(e.target.value)}
@@ -152,24 +157,27 @@ function App() {
         </div>
       )}
       <div className="app__posts">
+        {user?.displayName ? (
+          <ImageUpload username={user.displayName} />
+        ) : (
+          <h3>Sorry, you need to Login</h3>
+        )}
         {posts.map(({ id, username, imageUrl, caption }) => {
           return (
             <Posts
               key={id}
+              postId={id}
+              user={user}
               username={username}
               imageUrl={imageUrl}
               caption={caption}
             />
           );
         })}
-        {user?.displayName ? (
-          <ImageUpload username={user.displayName} />
-        ) : (
-          <h3>Sorry, you need to Login</h3>
-        )}
       </div>
       <InstagramEmbed
-        url="https://instagr.am/p/Zw9o4/"
+        url="https://www.instagram.com/p/BAuc9JmQodPPZBdR1UiXg6YVR2IJ80yx-PatzE0/"
+        clientAccessToken={merge}
         maxWidth={320}
         hideCaption={false}
         containerTagName="div"

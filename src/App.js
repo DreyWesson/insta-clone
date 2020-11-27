@@ -160,7 +160,7 @@ function App() {
         {user?.displayName ? (
           <ImageUpload username={user.displayName} />
         ) : (
-          <h3>Sorry, you need to Login</h3>
+          <h3 className="app__notLoggedIn">Sign Up To Upload</h3>
         )}
         {posts.map(({ id, username, imageUrl, caption, timestamp }) => {
           return (

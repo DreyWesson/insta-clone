@@ -57,7 +57,7 @@ const Posts = ({ postId, username, imageUrl, caption, user }) => {
             {comments.length > 0 ? (
               <h2 className="post__commentsHeader">Comments</h2>
             ) : (
-              console.log(comments.length)
+              console.log(`👨‍🦱${username} 📨${caption}: 🤐 no comment`)
             )}
             {comments?.map((comment) => (
               <div className="post__commentContainer">

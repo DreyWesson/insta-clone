@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import firebase from "firebase";
 import db from "../firebase";
 import "./Posts.css";
-// import formatDate from "../time";
 import {
   BookmarkBorderOutlined,
   ChatBubbleOutlineOutlined,
@@ -11,10 +10,13 @@ import {
   SendOutlined,
 } from "@material-ui/icons";
 import { isToday } from "../time";
+import { setOpenSignIn } from "../actions/modalAction";
+import { useDispatch } from "react-redux";
 
 const Posts = ({ postId, username, imageUrl, caption, user, timestamp }) => {
   const [comments, setComments] = useState([]);
   const [comment, setComment] = useState("");
+  const dispatch = useDispatch();
 
   useEffect(() => {
     let unsubscribe;
@@ -40,12 +42,6 @@ const Posts = ({ postId, username, imageUrl, caption, user, timestamp }) => {
     });
     setComment("");
   };
-  // const slotInTime = (time) => {
-  //   return formatDate(new Date(), "checkIfToday") ===
-  //     formatDate(time, "checkIfToday")
-  //     ? formatDate(time, "whenVsNow")
-  //     : formatDate(time, "longTime");
-  // };
 
   return (
     <>
@@ -71,7 +67,6 @@ const Posts = ({ postId, username, imageUrl, caption, user, timestamp }) => {
               <strong>{username}:</strong> {caption}
             </h4>
             <small className="post__contentTime">
-              {/* {slotInTime(timestamp?.toDate())} */}
               {isToday(timestamp?.toDate())}
             </small>
           </div>
@@ -88,7 +83,6 @@ const Posts = ({ postId, username, imageUrl, caption, user, timestamp }) => {
                   <strong>{comment.username}: </strong> {comment.text}
                 </p>
                 <small>
-                  {/* {comment.timestamp && slotInTime(comment.timestamp?.toDate())} */}
                   {comment.timestamp && isToday(comment.timestamp?.toDate())}
                 </small>
               </div>
@@ -124,11 +118,13 @@ const Posts = ({ postId, username, imageUrl, caption, user, timestamp }) => {
                 />
                 <button
                   className="post__buttonSignup"
-                  disabled={!comment}
                   type="submit"
-                  onClick={postComment}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    dispatch(setOpenSignIn(true));
+                  }}
                 >
-                  SignIn to comment
+                  Login to comment
                 </button>
               </>
             )}

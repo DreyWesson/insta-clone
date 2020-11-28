@@ -3,10 +3,11 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./Header.css";
 import { auth } from "../firebase";
-import { setOpen, setOpenSignIn } from "../actions/modalAction";
-import { setEmail, setPassword, setUsername } from "../actions/userActions";
+// import { setOpen, setOpenSignIn } from "../actions/modalAction";
+// import { setEmail, setPassword, setUsername } from "../actions/userActions";
 import { getModalStyle, useStyles } from "../modal";
 import Modal from "@material-ui/core/Modal";
+import { actionTypes, chooseAction } from "../actions/actionTypes";
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -24,6 +25,13 @@ const Header = () => {
       };
     }
   );
+  const {
+    SET_OPEN,
+    SET_OPEN_SIGN_IN,
+    SET_USERNAME,
+    SET_EMAIL,
+    SET_PASSWORD,
+  } = actionTypes;
 
   const [modalStyle] = useState(getModalStyle),
     classes = useStyles();
@@ -38,7 +46,7 @@ const Header = () => {
         });
       })
       .catch((err) => alert(err.message));
-    dispatch(setOpen(false));
+    dispatch(chooseAction(false, SET_OPEN));
   };
   const signIn = (e) => {
     e.preventDefault();
@@ -46,13 +54,13 @@ const Header = () => {
       .signInWithEmailAndPassword(email, password)
       .catch((err) => err.message);
 
-    dispatch(setOpenSignIn(false));
+    dispatch(chooseAction(false, SET_OPEN_SIGN_IN));
   };
   return (
     <>
       <Modal
         open={open}
-        onClose={() => dispatch(setOpen(false))}
+        onClose={() => dispatch(chooseAction(false, SET_OPEN))}
         aria-labelledby="simple-modal-title"
         aria-describedby="simple-modal-description"
       >
@@ -69,21 +77,27 @@ const Header = () => {
               className="app__inputs"
               type="text"
               placeholder="Username"
-              onChange={(e) => dispatch(setUsername(e.target.value))}
+              onChange={(e) =>
+                dispatch(chooseAction(e.target.value, SET_USERNAME))
+              }
               value={username}
             />
             <Input
               className="app__inputs"
               type="email"
               placeholder="Email"
-              onChange={(e) => dispatch(setEmail(e.target.value))}
+              onChange={(e) =>
+                dispatch(chooseAction(e.target.value, SET_EMAIL))
+              }
               value={email}
             />
             <Input
               className="app__inputs"
               type="password"
               placeholder="Password"
-              onChange={(e) => dispatch(setPassword(e.target.value))}
+              onChange={(e) =>
+                dispatch(chooseAction(e.target.value, SET_PASSWORD))
+              }
               value={password}
             />
             <Button type="submit" onClick={signUp}>
@@ -94,7 +108,7 @@ const Header = () => {
       </Modal>
       <Modal
         open={openSignIn}
-        onClose={() => dispatch(setOpenSignIn(false))}
+        onClose={() => dispatch(chooseAction(false, SET_OPEN_SIGN_IN))}
         aria-labelledby="simple-modal-title"
         aria-describedby="simple-modal-description"
       >
@@ -110,13 +124,17 @@ const Header = () => {
             <Input
               type="email"
               placeholder="Email"
-              onChange={(e) => dispatch(setEmail(e.target.value))}
+              onChange={(e) =>
+                dispatch(chooseAction(e.target.value, SET_EMAIL))
+              }
               value={email}
             />
             <Input
               type="password"
               placeholder="Password"
-              onChange={(e) => dispatch(setPassword(e.target.value))}
+              onChange={(e) =>
+                dispatch(chooseAction(e.target.value, SET_PASSWORD))
+              }
               value={password}
             />
             <Button type="submit" onClick={signIn}>
@@ -145,11 +163,14 @@ const Header = () => {
             <div className="app__loginContainer">
               <Button
                 type="submit"
-                onClick={() => dispatch(setOpenSignIn(true))}
+                onClick={() => dispatch(chooseAction(true, SET_OPEN_SIGN_IN))}
               >
                 Sign In
               </Button>
-              <Button type="submit" onClick={() => dispatch(setOpen(true))}>
+              <Button
+                type="submit"
+                onClick={() => dispatch(chooseAction(true, SET_OPEN))}
+              >
                 Sign Up
               </Button>
             </div>

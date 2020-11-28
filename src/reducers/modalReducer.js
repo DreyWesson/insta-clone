@@ -22,13 +22,5 @@ const openReducer = (state = initialState, action) => {
       return state;
   }
 };
-// const openReducerTwo = (state = initialState, action) => {
-//   console.log(` 💪 ${action.type} ACTION 💪`, action);
-//   switch (action.type) {
-
-//     default:
-//       return state;
-//   }
-// };
 
 export { openReducer };

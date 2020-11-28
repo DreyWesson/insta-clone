@@ -10,8 +10,9 @@ import {
   SendOutlined,
 } from "@material-ui/icons";
 import { isToday } from "../time";
-import { setOpenSignIn } from "../actions/modalAction";
+// import { setOpenSignIn } from "../actions/modalAction";
 import { useDispatch } from "react-redux";
+import { actionTypes, chooseAction } from "../actions/actionTypes";
 
 const Posts = ({ postId, username, imageUrl, caption, user, timestamp }) => {
   const [comments, setComments] = useState([]);
@@ -121,7 +122,7 @@ const Posts = ({ postId, username, imageUrl, caption, user, timestamp }) => {
                   type="submit"
                   onClick={(e) => {
                     e.preventDefault();
-                    dispatch(setOpenSignIn(true));
+                    dispatch(chooseAction(true, actionTypes.SET_OPEN_SIGN_IN));
                   }}
                 >
                   Login to comment

@@ -4,7 +4,8 @@ import ImageUpload from "./ImageUpload";
 import Posts from "./Posts";
 import { useDispatch, useSelector } from "react-redux";
 import { Button } from "@material-ui/core";
-import { setOpen } from "../actions/modalAction";
+// import { setOpen } from "../actions/modalAction";
+import { actionTypes, chooseAction } from "../actions/actionTypes";
 
 const Poster = () => {
   const { user, posts } = useSelector(({ userReducer, postReducer }) => {
@@ -24,7 +25,7 @@ const Poster = () => {
         <div className="poster__signUpContainer">
           <Button
             className="poster__notLoggedIn"
-            onClick={() => dispatch(setOpen(true))}
+            onClick={() => dispatch(chooseAction(true, actionTypes.SET_OPEN))}
           >
             Sign Up To Upload
           </Button>

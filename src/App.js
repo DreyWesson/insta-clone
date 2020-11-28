@@ -4,14 +4,16 @@ import Header from "./components/Header";
 import db, { auth } from "./firebase";
 import InstagramEmbed from "react-instagram-embed";
 import { useDispatch, useSelector } from "react-redux";
-import { setPosts } from "./actions/postActions";
-import { setUser } from "./actions/userActions";
+// import { setPosts } from "./actions/postActions";
+// import { setUser } from "./actions/userActions";
 
 import Poster from "./components/Poster";
+import { actionTypes, chooseAction } from "./actions/actionTypes";
 
 function App() {
   const { REACT_APP_CLIENT_TOKEN, REACT_APP_ID } = process.env,
     merge = `${REACT_APP_ID}|${REACT_APP_CLIENT_TOKEN}`;
+  const { SET_USER, SET_POSTS } = actionTypes;
 
   const dispatch = useDispatch();
   const { user, username } = useSelector(({ userReducer }) => {
@@ -21,13 +23,14 @@ function App() {
       username,
     };
   });
-
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((authUser) =>
-      authUser ? dispatch(setUser(authUser)) : dispatch(setUser(null))
+      authUser
+        ? dispatch(chooseAction(authUser, SET_USER))
+        : dispatch(chooseAction(null, SET_USER))
     );
     return () => unsubscribe();
-  }, [user, username, dispatch]);
+  }, [user, username, dispatch, SET_USER]);
 
   useEffect(() => {
     function database() {
@@ -35,18 +38,19 @@ function App() {
         .orderBy("timestamp", "desc")
         .onSnapshot((snapshot) => {
           dispatch(
-            setPosts(
+            chooseAction(
               snapshot.docs.map((doc) => {
                 const data = doc.data(),
                   id = doc.id;
                 return { id, ...data };
-              })
+              }),
+              SET_POSTS
             )
           );
         });
     }
     database();
-  }, [dispatch]);
+  }, [SET_POSTS, dispatch]);
 
   return (
     <div className="app">

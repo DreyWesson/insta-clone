@@ -1,7 +1,7 @@
 import { actionTypes } from "./actionTypes";
 
-export const setPosts = (data) => {
+export const setAuth = (data) => {
   // console.log(data);
   return (dispatch, getState) =>
-    dispatch({ type: actionTypes.SET_POSTS, posts: data });
+    dispatch({ type: actionTypes.SET_AUTH, posts: data });
 };

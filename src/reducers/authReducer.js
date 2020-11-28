@@ -4,17 +4,17 @@ export const initialState = {
   posts: [],
 };
 
-const postReducer = (state = initialState, action) => {
+const authReducer = (state = initialState, action) => {
   console.log(` 💪 ${action.type} ACTION 💪`, action);
   switch (action.type) {
-    case actionTypes.SET_POSTS:
+    case actionTypes.SET_AUTH:
       return {
         ...state,
-        posts: action.posts,
+        auth: action.auth,
       };
     default:
       return state;
   }
 };
 
-export default postReducer;
+export default authReducer;

@@ -8,25 +8,32 @@ import { getModalStyle, useStyles } from "./modal";
 import Modal from "@material-ui/core/Modal";
 import ImageUpload from "./components/ImageUpload";
 import InstagramEmbed from "react-instagram-embed";
+import { useDispatch, useSelector } from "react-redux";
+import { setPosts } from "./actions/postActions";
+import { setUser } from "./actions/userActions";
 
 function App() {
-  const [posts, setPosts] = useState([]),
-    [modalStyle] = useState(getModalStyle),
+  const [modalStyle] = useState(getModalStyle),
+    // [posts, setPosts] = useState([]),
     [open, setOpen] = useState(false),
     [username, setUsername] = useState(""),
     [email, setEmail] = useState(""),
     [openSignIn, setOpenSignIn] = useState(false),
-    [user, setUser] = useState(null),
+    // [user, setUser] = useState(null),
     [password, setPassword] = useState(""),
     classes = useStyles(),
     { REACT_APP_CLIENT_TOKEN, REACT_APP_ID } = process.env,
     merge = `${REACT_APP_ID}|${REACT_APP_CLIENT_TOKEN}`;
 
+  const dispatch = useDispatch();
+  const { user, posts } = useSelector(({ userReducer, postReducer }) => {
+    return { user: userReducer.user, posts: postReducer.posts };
+  });
+
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((authUser) => {
-      console.log(authUser);
-      authUser ? setUser(authUser) : setUser(null);
-    });
+    const unsubscribe = auth.onAuthStateChanged((authUser) =>
+      authUser ? dispatch(setUser(authUser)) : dispatch(setUser(null))
+    );
     return () => unsubscribe();
   }, [user, username]);
 
@@ -34,15 +41,31 @@ function App() {
     db.collection("posts")
       .orderBy("timestamp", "desc")
       .onSnapshot((snapshot) => {
-        setPosts(
-          snapshot.docs.map((doc) => {
-            const data = doc.data(),
-              id = doc.id;
-            return { id, ...data };
-          })
+        dispatch(
+          setPosts(
+            snapshot.docs.map((doc) => {
+              const data = doc.data(),
+                id = doc.id;
+              return { id, ...data };
+            })
+          )
         );
       });
   }, []);
+
+  // useEffect(() => {
+  //   db.collection("posts")
+  //     .orderBy("timestamp", "desc")
+  //     .onSnapshot((snapshot) => {
+  //       setPosts(
+  //         snapshot.docs.map((doc) => {
+  //           const data = doc.data(),
+  //             id = doc.id;
+  //           return { id, ...data };
+  //         })
+  //       );
+  //     });
+  // }, []);
 
   const signUp = (e) => {
     e.preventDefault();
@@ -162,7 +185,7 @@ function App() {
         ) : (
           <h3 className="app__notLoggedIn">Sign Up To Upload</h3>
         )}
-        {posts.map(({ id, username, imageUrl, caption, timestamp }) => {
+        {posts?.map(({ id, username, imageUrl, caption, timestamp }) => {
           return (
             <Posts
               key={id}

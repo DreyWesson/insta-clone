@@ -5,7 +5,7 @@ export const initialState = {
 };
 
 const userReducer = (state = initialState, action) => {
-  console.log(action);
+  console.log(` 💪 ${action.type} ACTION 💪`, action);
   switch (action.type) {
     case actionTypes.SET_USER:
       return {

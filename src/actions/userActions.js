@@ -7,12 +7,6 @@ const setUser = (data) => {
     dispatch({ type: actionTypes.SET_USER, user: data });
 };
 
-const setAuth = (data) => {
-  // console.log(data);
-  return (dispatch, getState) =>
-    dispatch({ type: actionTypes.SET_AUTH, auth: data });
-};
-
 const setUsername = (data) => {
   // console.log(data);
   return (dispatch, getState) =>
@@ -29,6 +23,11 @@ const setPassword = (data) => {
   // console.log(data);
   return (dispatch, getState) =>
     dispatch({ type: actionTypes.SET_PASSWORD, password: data });
+};
+const setAuth = (data) => {
+  // console.log(data);
+  return (dispatch, getState) =>
+    dispatch({ type: actionTypes.SET_AUTH, auth: data });
 };
 
 export { setUser, setAuth, setUsername, setEmail, setPassword };

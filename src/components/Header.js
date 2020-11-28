@@ -5,11 +5,18 @@ import "./Header.css";
 import db, { auth } from "../firebase";
 
 const Header = () => {
-  const { user, posts } = useSelector(({ userReducer, postReducer }) => {
-    return { user: userReducer.user, posts: postReducer.posts };
-  });
+  const { user, posts, open } = useSelector(
+    ({ userReducer, postReducer, openReducer }) => {
+      return {
+        user: userReducer.user,
+        posts: postReducer.posts,
+        open: openReducer.open,
+      };
+    }
+  );
   console.log("👨‍🦱 User", user);
   console.log("📨 Posts", posts);
+  console.log("📨 Open", open);
 
   // const signUp = (e) => {
   //   e.preventDefault();

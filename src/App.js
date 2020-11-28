@@ -10,24 +10,46 @@ import ImageUpload from "./components/ImageUpload";
 import InstagramEmbed from "react-instagram-embed";
 import { useDispatch, useSelector } from "react-redux";
 import { setPosts } from "./actions/postActions";
-import { setUser } from "./actions/userActions";
+import {
+  setEmail,
+  setPassword,
+  setUser,
+  setUsername,
+} from "./actions/userActions";
+import { setOpen, setOpenSignIn } from "./actions/modalAction";
 
 function App() {
   const [modalStyle] = useState(getModalStyle),
     // [posts, setPosts] = useState([]),
-    [open, setOpen] = useState(false),
-    [username, setUsername] = useState(""),
-    [email, setEmail] = useState(""),
-    [openSignIn, setOpenSignIn] = useState(false),
+    // [open, setOpen] = useState(false),
+    // [openSignIn, setOpenSignIn] = useState(false),
+    // [username, setUsername] = useState(""),
+    // [email, setEmail] = useState(""),
     // [user, setUser] = useState(null),
-    [password, setPassword] = useState(""),
+    // [password, setPassword] = useState(""),
     classes = useStyles(),
     { REACT_APP_CLIENT_TOKEN, REACT_APP_ID } = process.env,
     merge = `${REACT_APP_ID}|${REACT_APP_CLIENT_TOKEN}`;
 
   const dispatch = useDispatch();
-  const { user, posts } = useSelector(({ userReducer, postReducer }) => {
-    return { user: userReducer.user, posts: postReducer.posts };
+  const {
+    user,
+    username,
+    email,
+    password,
+    posts,
+    open,
+    openSignIn,
+  } = useSelector(({ userReducer, postReducer, openReducer }) => {
+    return {
+      user: userReducer.user,
+      username: userReducer.username,
+      email: userReducer.email,
+      password: userReducer.password,
+      posts: postReducer.posts,
+      open: openReducer.open,
+      openSignIn: openReducer.openSignIn,
+    };
   });
 
   useEffect(() => {
@@ -77,7 +99,7 @@ function App() {
         });
       })
       .catch((err) => alert(err.message));
-    setOpen(false);
+    dispatch(setOpen(false));
   };
   const signIn = (e) => {
     e.preventDefault();
@@ -85,13 +107,13 @@ function App() {
       .signInWithEmailAndPassword(email, password)
       .catch((err) => err.message);
 
-    setOpenSignIn(false);
+    dispatch(setOpenSignIn(false));
   };
   return (
     <div className="app">
       <Modal
         open={open}
-        onClose={() => setOpen(false)}
+        onClose={() => dispatch(setOpen(false))}
         aria-labelledby="simple-modal-title"
         aria-describedby="simple-modal-description"
       >
@@ -108,21 +130,21 @@ function App() {
               className="app__inputs"
               type="text"
               placeholder="Username"
-              onChange={(e) => setUsername(e.target.value)}
+              onChange={(e) => dispatch(setUsername(e.target.value))}
               value={username}
             />
             <Input
               className="app__inputs"
               type="email"
               placeholder="Email"
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(e) => dispatch(setEmail(e.target.value))}
               value={email}
             />
             <Input
               className="app__inputs"
               type="password"
               placeholder="Password"
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={(e) => dispatch(setPassword(e.target.value))}
               value={password}
             />
             <Button type="submit" onClick={signUp}>
@@ -133,7 +155,7 @@ function App() {
       </Modal>
       <Modal
         open={openSignIn}
-        onClose={() => setOpenSignIn(false)}
+        onClose={() => dispatch(setOpenSignIn(false))}
         aria-labelledby="simple-modal-title"
         aria-describedby="simple-modal-description"
       >
@@ -149,13 +171,13 @@ function App() {
             <Input
               type="email"
               placeholder="Email"
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(e) => dispatch(setEmail(e.target.value))}
               value={email}
             />
             <Input
               type="password"
               placeholder="Password"
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={(e) => dispatch(setPassword(e.target.value))}
               value={password}
             />
             <Button type="submit" onClick={signIn}>
@@ -171,10 +193,10 @@ function App() {
         </Button>
       ) : (
         <div className="app__loginContainer">
-          <Button type="submit" onClick={() => setOpenSignIn(true)}>
+          <Button type="submit" onClick={() => dispatch(setOpenSignIn(true))}>
             Sign In
           </Button>
-          <Button type="submit" onClick={() => setOpen(true)}>
+          <Button type="submit" onClick={() => dispatch(setOpen(true))}>
             Sign Up
           </Button>
         </div>

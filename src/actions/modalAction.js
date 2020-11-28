@@ -6,8 +6,11 @@ export const setOpen = (data) => {
     dispatch({ type: actionTypes.SET_OPEN, open: data });
 };
 
-export const setModalTwo = (data) => {
+export const setOpenSignIn = (data) => {
   // console.log(data);
   return (dispatch, getState) =>
-    dispatch({ type: actionTypes.SET_OPEN_SIGN_IN, modal: data });
+    dispatch({
+      type: actionTypes.SET_OPEN_SIGN_IN,
+      openSignIn: data,
+    });
 };

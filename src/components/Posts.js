@@ -1,4 +1,4 @@
-import { Avatar } from "@material-ui/core";
+import { Avatar, Button } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import firebase from "firebase";
 import db from "../firebase";
@@ -21,7 +21,8 @@ const Posts = ({ postId, username, imageUrl, caption, user, timestamp }) => {
   const [comments, setComments] = useState([]),
     [comment, setComment] = useState(""),
     dispatch = useDispatch(),
-    { SET_OPEN_SIGN_IN } = actionTypes;
+    { SET_OPEN_SIGN_IN } = actionTypes,
+    [allComments, setAllComments] = useState(false);
 
   const { presentUser } = useSelector(({ userReducer }) => {
     let { user } = userReducer;
@@ -81,22 +82,6 @@ const Posts = ({ postId, username, imageUrl, caption, user, timestamp }) => {
       );
       getConfirmation && dispatch(chooseAction(true, SET_OPEN_SIGN_IN));
     }
-
-    // user
-    //   ? username === presentUser.displayName
-    //     ? // prevent other users from deleting user's post
-    //       (db
-    //         .collection("posts")
-    //         .doc(postId)
-    //         .delete()
-    //         .then(() =>
-    //           console.log(`Document ID: ${postId} successfully deleted!`)
-    //         )
-    //         .catch((error) =>
-    //           console.error("Error removing document: ", error.message)
-    //         ))
-    //     : alert("This is not your post")
-    //   : alert("You're not signed in");
   };
 
   return (
@@ -147,56 +132,71 @@ const Posts = ({ postId, username, imageUrl, caption, user, timestamp }) => {
             ) : (
               console.log(`👨‍🦱${username} 📨${caption}: 🤐 no comment`)
             )}
-            {comments?.map((comment) => (
-              <div className="post__commentContainer">
-                <p key={Math.random() * 1000} className="post__comment">
-                  <strong>{comment.username}: </strong> {comment.text}
-                </p>
-                <small>
-                  {comment.timestamp && isToday(comment.timestamp?.toDate())}
-                </small>
-              </div>
-            ))}
+            {!allComments &&
+              comments?.slice(0, 3).map((comment) => (
+                <div className="post__commentContainer">
+                  <p key={Math.random() * 1000} className="post__comment">
+                    <strong>{comment.username}: </strong> {comment.text}
+                  </p>
+                  <small>
+                    {comment.timestamp && isToday(comment.timestamp?.toDate())}
+                  </small>
+                </div>
+              ))}
+            {allComments &&
+              comments?.map((comment) => (
+                <div className="post__commentContainer">
+                  <p key={Math.random() * 1000} className="post__comment">
+                    <strong>{comment.username}: </strong> {comment.text}
+                  </p>
+                  <small>
+                    {comment.timestamp && isToday(comment.timestamp?.toDate())}
+                  </small>
+                </div>
+              ))}
+            {comments.length > 3 && (
+              <Button
+                className="post__commentShowMore"
+                onClick={() =>
+                  !allComments ? setAllComments(true) : setAllComments(false)
+                }
+              >
+                {allComments ? (
+                  <>Show less comment</>
+                ) : (
+                  <>View all {comments.length} comments</>
+                )}
+              </Button>
+            )}
           </div>
           <form className="post__commentBox">
+            <input
+              className="post__input"
+              type="text"
+              placeholder="Add a comment..."
+              value={comment}
+              onChange={(e) => setComment(e.target.value)}
+            />
             {user ? (
-              <>
-                <input
-                  className="post__input"
-                  type="text"
-                  placeholder="Add a comment..."
-                  value={comment}
-                  onChange={(e) => setComment(e.target.value)}
-                />
-                <button
-                  className="post__button"
-                  disabled={!comment}
-                  type="submit"
-                  onClick={postComment}
-                >
-                  Post
-                </button>
-              </>
+              <button
+                className="post__button"
+                disabled={!comment}
+                type="submit"
+                onClick={postComment}
+              >
+                Post
+              </button>
             ) : (
-              <>
-                <input
-                  className="post__inputSignup"
-                  type="text"
-                  placeholder="Add a comment..."
-                  value={comment}
-                  onChange={(e) => setComment(e.target.value)}
-                />
-                <button
-                  className="post__buttonSignup"
-                  type="submit"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    dispatch(chooseAction(true, SET_OPEN_SIGN_IN));
-                  }}
-                >
-                  Login to comment
-                </button>
-              </>
+              <button
+                className="post__buttonSignup"
+                type="submit"
+                onClick={(e) => {
+                  e.preventDefault();
+                  dispatch(chooseAction(true, SET_OPEN_SIGN_IN));
+                }}
+              >
+                Login to comment
+              </button>
             )}
           </form>
         </div>

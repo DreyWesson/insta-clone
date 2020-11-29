@@ -85,7 +85,7 @@
 .post__buttonSignup {
   flex: 0.3;
   border: none;
-  color: dodgerblue;
+  color: gray;
   background-color: transparent;
   border-top: 1px solid lightgray;
   outline-width: 0;
@@ -118,4 +118,9 @@
 [data-rmiz-btn-open],
 [data-rmiz-btn-close] {
   outline-width: 0;
+}
+
+.post__commentShowMore {
+  font-size: 12px !important;
+  text-transform: none !important;
 }

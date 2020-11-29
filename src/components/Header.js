@@ -171,12 +171,12 @@ const Header = () => {
               >
                 Sign In
               </Button>
-              <Button
+              {/* <Button
                 type="submit"
                 onClick={() => dispatch(chooseAction(true, SET_OPEN))}
               >
                 Sign Up
-              </Button>
+              </Button> */}
             </div>
           )}
         </div>

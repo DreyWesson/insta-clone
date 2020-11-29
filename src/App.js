@@ -4,11 +4,9 @@ import Header from "./components/Header";
 import db, { auth } from "./firebase";
 import InstagramEmbed from "react-instagram-embed";
 import { useDispatch, useSelector } from "react-redux";
-// import { setPosts } from "./actions/postActions";
-// import { setUser } from "./actions/userActions";
-
 import Poster from "./components/Poster";
-import { actionTypes, chooseAction } from "./actions/actionTypes";
+import { actionTypes } from "./actions/actionTypes";
+import { chooseAction } from "./actions/actions";
 
 function App() {
   const { REACT_APP_CLIENT_TOKEN, REACT_APP_ID } = process.env,

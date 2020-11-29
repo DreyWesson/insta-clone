@@ -3,11 +3,10 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./Header.css";
 import { auth } from "../firebase";
-// import { setOpen, setOpenSignIn } from "../actions/modalAction";
-// import { setEmail, setPassword, setUsername } from "../actions/userActions";
 import { getModalStyle, useStyles } from "../modal";
 import Modal from "@material-ui/core/Modal";
-import { actionTypes, chooseAction } from "../actions/actionTypes";
+import { actionTypes } from "../actions/actionTypes";
+import { chooseAction } from "../actions/actions";
 
 const Header = () => {
   const dispatch = useDispatch();

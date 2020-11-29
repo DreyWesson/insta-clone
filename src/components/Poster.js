@@ -4,8 +4,8 @@ import ImageUpload from "./ImageUpload";
 import Posts from "./Posts";
 import { useDispatch, useSelector } from "react-redux";
 import { Button } from "@material-ui/core";
-// import { setOpen } from "../actions/modalAction";
-import { actionTypes, chooseAction } from "../actions/actionTypes";
+import { actionTypes } from "../actions/actionTypes";
+import { chooseAction } from "../actions/actions";
 
 const Poster = () => {
   const { user, posts } = useSelector(({ userReducer, postReducer }) => {

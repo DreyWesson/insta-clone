@@ -1,14 +1,3 @@
-const actionTypes = {
-  SET_USER: "SET_USER",
-  SET_POSTS: "SET_POSTS",
-  SET_AUTH: "SET_AUTH",
-  SET_OPEN: "SET_OPEN",
-  SET_OPEN_SIGN_IN: "SET_OPEN_SIGN_IN",
-  SET_PASSWORD: "SET_PASSWORD",
-  SET_EMAIL: "SET_EMAIL",
-  SET_USERNAME: "SET_USERNAME",
-};
-
 const chooseAction = (data, actionType) => {
   const setActionTo = (payload) => {
     return (dispatch, getState) =>
@@ -38,4 +27,4 @@ const chooseAction = (data, actionType) => {
   }
 };
 
-export { actionTypes, chooseAction };
+export { chooseAction };

@@ -10,9 +10,9 @@ import {
   SendOutlined,
 } from "@material-ui/icons";
 import { isToday } from "../time";
-// import { setOpenSignIn } from "../actions/modalAction";
 import { useDispatch } from "react-redux";
-import { actionTypes, chooseAction } from "../actions/actionTypes";
+import { actionTypes } from "../actions/actionTypes";
+import { chooseAction } from "../actions/actions";
 
 const Posts = ({ postId, username, imageUrl, caption, user, timestamp }) => {
   const [comments, setComments] = useState([]);

@@ -154,7 +154,7 @@ const Posts = ({ postId, username, imageUrl, caption, user, timestamp }) => {
                   </small>
                 </div>
               ))}
-            {comments.length > 3 && (
+            {/* {comments.length > 3 && (
               <Button
                 className="post__commentShowMore"
                 onClick={() =>
@@ -167,8 +167,22 @@ const Posts = ({ postId, username, imageUrl, caption, user, timestamp }) => {
                   <>View all {comments.length} comments</>
                 )}
               </Button>
-            )}
+            )} */}
           </div>
+          {comments.length > 3 && (
+            <Button
+              className="post__commentShowMore"
+              onClick={() =>
+                !allComments ? setAllComments(true) : setAllComments(false)
+              }
+            >
+              {allComments ? (
+                <>Show less comment</>
+              ) : (
+                <>View all {comments.length} comments</>
+              )}
+            </Button>
+          )}
           <form className="post__commentBox">
             <input
               className="post__input"

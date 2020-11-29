@@ -114,3 +114,8 @@
   padding-right: 10px;
   font-size: 26px !important;
 }
+
+[data-rmiz-btn-open],
+[data-rmiz-btn-close] {
+  outline-width: 0;
+}

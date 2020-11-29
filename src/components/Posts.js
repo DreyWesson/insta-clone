@@ -6,11 +6,12 @@ import "./Posts.css";
 import {
   BookmarkBorderOutlined,
   ChatBubbleOutlineOutlined,
+  DeleteOutlined,
   FavoriteBorderOutlined,
   SendOutlined,
 } from "@material-ui/icons";
 import { isToday } from "../time";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { actionTypes } from "../actions/actionTypes";
 import { chooseAction } from "../actions/actions";
 
@@ -18,6 +19,13 @@ const Posts = ({ postId, username, imageUrl, caption, user, timestamp }) => {
   const [comments, setComments] = useState([]);
   const [comment, setComment] = useState("");
   const dispatch = useDispatch();
+
+  const { presentUser } = useSelector(({ userReducer }) => {
+    let { user } = userReducer;
+    return {
+      presentUser: user,
+    };
+  });
 
   useEffect(() => {
     let unsubscribe;
@@ -43,14 +51,38 @@ const Posts = ({ postId, username, imageUrl, caption, user, timestamp }) => {
     });
     setComment("");
   };
+  const deletePost = () => {
+    // Prevent people not signed in from deleting post
+    user
+      ? username === presentUser.displayName
+        ? // prevent other users from deleting user's post
+          db
+            .collection("posts")
+            .doc(postId)
+            .delete()
+            .then(() =>
+              console.log(`Document ID: ${postId} successfully deleted!`)
+            )
+            .catch((error) =>
+              console.error("Error removing document: ", error.message)
+            )
+        : alert("This is not your post")
+      : alert("You're not signed in");
+  };
 
   return (
     <>
       {username && (
         <div className="post">
-          <div className="post__header">
-            <Avatar className="post__avatar" alt={username} src={imageUrl} />
-            <h3>{username}</h3>
+          <div className="post__headerContainer">
+            <div className="post__header">
+              <Avatar className="post__avatar" alt={username} src={imageUrl} />
+              <h3>{username}</h3>
+            </div>
+            <DeleteOutlined
+              className="post__headerDelete"
+              onClick={deletePost}
+            />
           </div>
           <img className="post__image" src={imageUrl} alt="" />
 

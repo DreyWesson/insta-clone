@@ -23,6 +23,11 @@
   padding-right: 10px;
   color: gray;
 }
+.post__headerContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 .post__header {
   display: flex;
   align-items: center;
@@ -30,6 +35,10 @@
 }
 .post__avatar {
   margin-right: 15px;
+}
+.post__headerDelete {
+  padding-right: 10px;
+  color: lightgray !important;
 }
 .post__input {
   flex: 0.9;

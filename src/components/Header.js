@@ -24,6 +24,11 @@ const Header = () => {
       };
     }
   );
+  console.log("USER", user);
+  console.log("USERNAME", username);
+  console.log("EMAIL", email);
+  console.log("PASSWORD", password);
+
   const {
     SET_OPEN,
     SET_OPEN_SIGN_IN,

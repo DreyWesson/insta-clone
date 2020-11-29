@@ -5,6 +5,7 @@ import db, { storage } from "../firebase";
 import firebase from "firebase";
 
 const ImageUpload = ({ username }) => {
+  // console.log("UPLOAD USERNAME", username);
   const [caption, setCaption] = useState(""),
     [image, setImage] = useState(null),
     [progress, setProgress] = useState(0);
@@ -31,6 +32,7 @@ const ImageUpload = ({ username }) => {
           .child(image.name)
           .getDownloadURL()
           .then((url) => {
+            console.log("UPLOAD USERNAME", username);
             db.collection("posts").add({
               timestamp: firebase.firestore.FieldValue.serverTimestamp(),
               caption: caption,
@@ -70,7 +72,10 @@ const ImageUpload = ({ username }) => {
         type="file"
         onChange={handleChange}
       />
-      <Button className="imageUpload__uploadButton" onClick={handleUpload}>
+      <Button
+        className="imageUpload__uploadButton"
+        onClick={caption && image && handleUpload}
+      >
         Upload
       </Button>
     </div>

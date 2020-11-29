@@ -16,9 +16,10 @@ import { actionTypes } from "../actions/actionTypes";
 import { chooseAction } from "../actions/actions";
 
 const Posts = ({ postId, username, imageUrl, caption, user, timestamp }) => {
-  const [comments, setComments] = useState([]);
-  const [comment, setComment] = useState("");
-  const dispatch = useDispatch();
+  const [comments, setComments] = useState([]),
+    [comment, setComment] = useState(""),
+    dispatch = useDispatch(),
+    { SET_OPEN_SIGN_IN } = actionTypes;
 
   const { presentUser } = useSelector(({ userReducer }) => {
     let { user } = userReducer;
@@ -51,11 +52,16 @@ const Posts = ({ postId, username, imageUrl, caption, user, timestamp }) => {
     });
     setComment("");
   };
-  const deletePost = () => {
+  const deletePost = (e) => {
+    e.preventDefault();
     // Prevent people not signed in from deleting post
-    user
-      ? username === presentUser.displayName
-        ? // prevent other users from deleting user's post
+    if (user) {
+      // prevent other users from deleting user's post
+      if (username === presentUser.displayName) {
+        const getConfirmation = window.confirm(
+          "Are you sure you want to delete?"
+        );
+        getConfirmation &&
           db
             .collection("posts")
             .doc(postId)
@@ -65,9 +71,30 @@ const Posts = ({ postId, username, imageUrl, caption, user, timestamp }) => {
             )
             .catch((error) =>
               console.error("Error removing document: ", error.message)
-            )
-        : alert("This is not your post")
-      : alert("You're not signed in");
+            );
+      } else alert("This is not your post");
+    } else {
+      const getConfirmation = window.confirm(
+        "You're not Signed In. Would you like to sign in?"
+      );
+      getConfirmation && dispatch(chooseAction(true, SET_OPEN_SIGN_IN));
+    }
+
+    // user
+    //   ? username === presentUser.displayName
+    //     ? // prevent other users from deleting user's post
+    //       (db
+    //         .collection("posts")
+    //         .doc(postId)
+    //         .delete()
+    //         .then(() =>
+    //           console.log(`Document ID: ${postId} successfully deleted!`)
+    //         )
+    //         .catch((error) =>
+    //           console.error("Error removing document: ", error.message)
+    //         ))
+    //     : alert("This is not your post")
+    //   : alert("You're not signed in");
   };
 
   return (
@@ -154,7 +181,7 @@ const Posts = ({ postId, username, imageUrl, caption, user, timestamp }) => {
                   type="submit"
                   onClick={(e) => {
                     e.preventDefault();
-                    dispatch(chooseAction(true, actionTypes.SET_OPEN_SIGN_IN));
+                    dispatch(chooseAction(true, SET_OPEN_SIGN_IN));
                   }}
                 >
                   Login to comment

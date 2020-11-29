@@ -14,6 +14,8 @@ import { isToday } from "../time";
 import { useDispatch, useSelector } from "react-redux";
 import { actionTypes } from "../actions/actionTypes";
 import { chooseAction } from "../actions/actions";
+import Zoom from "react-medium-image-zoom";
+import "react-medium-image-zoom/dist/styles.css";
 
 const Posts = ({ postId, username, imageUrl, caption, user, timestamp }) => {
   const [comments, setComments] = useState([]),
@@ -103,7 +105,13 @@ const Posts = ({ postId, username, imageUrl, caption, user, timestamp }) => {
         <div className="post">
           <div className="post__headerContainer">
             <div className="post__header">
-              <Avatar className="post__avatar" alt={username} src={imageUrl} />
+              <Zoom>
+                <Avatar
+                  className="post__avatar"
+                  alt={username}
+                  src={imageUrl}
+                />
+              </Zoom>
               <h3>{username}</h3>
             </div>
             <DeleteOutlined
@@ -111,7 +119,9 @@ const Posts = ({ postId, username, imageUrl, caption, user, timestamp }) => {
               onClick={deletePost}
             />
           </div>
-          <img className="post__image" src={imageUrl} alt="" />
+          <Zoom>
+            <img className="post__image" src={imageUrl} alt={caption} />
+          </Zoom>
 
           <div className="post__icons">
             <div className="post__iconsGrouped">

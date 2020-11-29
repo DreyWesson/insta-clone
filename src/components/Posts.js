@@ -55,6 +55,20 @@ const Posts = ({ postId, username, imageUrl, caption, user, timestamp }) => {
     });
     setComment("");
   };
+
+  const commentView = (comment) => {
+    return (
+      <div className="post__commentContainer">
+        <p key={Math.random() * 1000} className="post__comment">
+          <strong>{comment.username}: </strong> {comment.text}
+        </p>
+        <small>
+          {comment.timestamp && isToday(comment.timestamp?.toDate())}
+        </small>
+      </div>
+    );
+  };
+
   const deletePost = (e) => {
     e.preventDefault();
     // Prevent people not signed in from deleting post
@@ -132,42 +146,9 @@ const Posts = ({ postId, username, imageUrl, caption, user, timestamp }) => {
             ) : (
               console.log(`👨‍🦱${username} 📨${caption}: 🤐 no comment`)
             )}
-            {!allComments &&
-              comments?.slice(0, 3).map((comment) => (
-                <div className="post__commentContainer">
-                  <p key={Math.random() * 1000} className="post__comment">
-                    <strong>{comment.username}: </strong> {comment.text}
-                  </p>
-                  <small>
-                    {comment.timestamp && isToday(comment.timestamp?.toDate())}
-                  </small>
-                </div>
-              ))}
-            {allComments &&
-              comments?.map((comment) => (
-                <div className="post__commentContainer">
-                  <p key={Math.random() * 1000} className="post__comment">
-                    <strong>{comment.username}: </strong> {comment.text}
-                  </p>
-                  <small>
-                    {comment.timestamp && isToday(comment.timestamp?.toDate())}
-                  </small>
-                </div>
-              ))}
-            {/* {comments.length > 3 && (
-              <Button
-                className="post__commentShowMore"
-                onClick={() =>
-                  !allComments ? setAllComments(true) : setAllComments(false)
-                }
-              >
-                {allComments ? (
-                  <>Show less comment</>
-                ) : (
-                  <>View all {comments.length} comments</>
-                )}
-              </Button>
-            )} */}
+            {allComments
+              ? allComments && comments?.map((comment) => commentView(comment))
+              : comments?.slice(0, 3).map((comment) => commentView(comment))}
           </div>
           {comments.length > 3 && (
             <Button

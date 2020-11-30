@@ -6,8 +6,7 @@
   transition: top 1s;
 }
 .header__hidden {
-  top: -110px;
-  /* visibility: hidden; */
+  top: -120px;
 }
 .header__container {
   display: flex;

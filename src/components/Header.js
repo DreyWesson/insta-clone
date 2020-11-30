@@ -7,6 +7,7 @@ import { getModalStyle, useStyles } from "../modal";
 import Modal from "@material-ui/core/Modal";
 import { actionTypes } from "../actions/actionTypes";
 import { chooseAction } from "../actions/actions";
+import { useScrollPosition } from "../scroll";
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -24,18 +25,24 @@ const Header = () => {
       };
     }
   );
-  console.log("USER", user);
-  console.log("USERNAME", username);
-  console.log("EMAIL", email);
-  console.log("PASSWORD", password);
-
   const {
     SET_OPEN,
     SET_OPEN_SIGN_IN,
     SET_USERNAME,
     SET_EMAIL,
     SET_PASSWORD,
+    SET_SCROLL,
   } = actionTypes;
+  const [hideOnScroll, setHideOnScroll] = useState(true);
+  useScrollPosition(
+    ({ prevPos, currPos }) => {
+      const isShow = currPos.y > prevPos.y;
+      if (isShow !== hideOnScroll) setHideOnScroll(isShow);
+      // Dispatch/push scroll data to redux
+      dispatch(chooseAction(hideOnScroll, SET_SCROLL));
+    },
+    [hideOnScroll]
+  );
 
   const [modalStyle] = useState(getModalStyle),
     classes = useStyles();
@@ -148,7 +155,7 @@ const Header = () => {
         </div>
       </Modal>
 
-      <div className="header">
+      <div className={`header ${hideOnScroll ? "active" : "header__hidden"}`}>
         <div className="header__container">
           <img
             className="header__logo"

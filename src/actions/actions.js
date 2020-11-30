@@ -22,6 +22,10 @@ const chooseAction = (data, actionType) => {
       return setActionTo("open");
     case "SET_OPEN_SIGN_IN":
       return setActionTo("openSignIn");
+    case "SET_ALL_COMMENTS":
+      return setActionTo("allComments");
+    case "SET_SCROLL":
+      return setActionTo("hideOnScroll");
     default:
       break;
   }

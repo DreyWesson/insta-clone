@@ -4,9 +4,11 @@ import firebase from "firebase";
 import db from "../firebase";
 import "./Posts.css";
 import {
+  Bookmark,
   BookmarkBorderOutlined,
   ChatBubbleOutlineOutlined,
   DeleteOutlined,
+  Favorite,
   FavoriteBorderOutlined,
   SendOutlined,
 } from "@material-ui/icons";
@@ -16,20 +18,44 @@ import { actionTypes } from "../actions/actionTypes";
 import { chooseAction } from "../actions/actions";
 import Zoom from "react-medium-image-zoom";
 import "react-medium-image-zoom/dist/styles.css";
+import {
+  EmailShareButton,
+  FacebookShareButton,
+  PinterestShareButton,
+  TelegramShareButton,
+  TwitterShareButton,
+  WhatsappShareButton,
+  EmailIcon,
+  FacebookIcon,
+  PinterestIcon,
+  TelegramIcon,
+  TwitterIcon,
+  WhatsappIcon,
+} from "react-share";
 
 const Posts = ({ postId, username, imageUrl, caption, user, timestamp }) => {
   const [comments, setComments] = useState([]),
     [comment, setComment] = useState(""),
     dispatch = useDispatch(),
-    { SET_OPEN_SIGN_IN } = actionTypes,
-    [allComments, setAllComments] = useState(false);
+    { SET_OPEN_SIGN_IN, SET_ALL_COMMENTS } = actionTypes,
+    // [allComments, setAllComments] = useState(false),
+    [fav, setFav] = useState(false),
+    [favCount, setFavCount] = useState((Math.random() * 5000) | 0),
+    [bookmark, setBookmark] = useState("none"),
+    [bookmarkStatus, setBookmarkStatus] = useState(false),
+    [opacityDisplay, setOpacityDisplay] = useState(0);
+  const [shareButton, setShareButton] = useState("none");
 
-  const { presentUser } = useSelector(({ userReducer }) => {
-    let { user } = userReducer;
-    return {
-      presentUser: user,
-    };
-  });
+  const { presentUser, allComments } = useSelector(
+    ({ userReducer, postReducer }) => {
+      let { user } = userReducer;
+      let { allComments } = postReducer;
+      return {
+        presentUser: user,
+        allComments,
+      };
+    }
+  );
 
   useEffect(() => {
     let unsubscribe;
@@ -97,6 +123,23 @@ const Posts = ({ postId, username, imageUrl, caption, user, timestamp }) => {
       getConfirmation && dispatch(chooseAction(true, SET_OPEN_SIGN_IN));
     }
   };
+  const incrementFav = () => {
+    setFavCount(favCount + 1);
+    !fav && setFav(true);
+  };
+  const decrementFav = () => {
+    setFavCount(favCount - 1);
+    fav && setFav(false);
+  };
+  const bookmarkTweak = () => {
+    setBookmark("block");
+    setOpacityDisplay(1);
+    bookmarkStatus ? setBookmarkStatus(false) : setBookmarkStatus(true);
+    setTimeout(() => {
+      setBookmark("none");
+      setOpacityDisplay(0);
+    }, 3000);
+  };
 
   return (
     <>
@@ -121,14 +164,108 @@ const Posts = ({ postId, username, imageUrl, caption, user, timestamp }) => {
           <Zoom>
             <img className="post__image" src={imageUrl} alt={caption} />
           </Zoom>
+          <div
+            className="post__bookmarks"
+            style={{ display: bookmark, opacity: opacityDisplay }}
+          >
+            <div className="post__bookmarkContainer">
+              <div className="post__bookmark">
+                <Zoom>
+                  <Avatar
+                    className="post__bookmarkAvatar"
+                    alt={username}
+                    src={imageUrl}
+                  />
+                </Zoom>
+                <p className="post__bookmarkSaved">Saved 😉</p>
+              </div>
+              <p className="post__bookmarkCollection">Saved to collection</p>
+            </div>
+          </div>
 
           <div className="post__icons">
             <div className="post__iconsGrouped">
-              <FavoriteBorderOutlined className="post__icon" />
-              <ChatBubbleOutlineOutlined className="post__icon" />
-              <SendOutlined className="post__icon" />
+              {fav ? (
+                <Favorite
+                  className="post__icon post__iconFav"
+                  onClick={decrementFav}
+                />
+              ) : (
+                <FavoriteBorderOutlined
+                  className="post__icon"
+                  onClick={incrementFav}
+                />
+              )}
+
+              <ChatBubbleOutlineOutlined
+                className={`post__icon ${allComments && "post__allComments"}`}
+                onClick={() =>
+                  !allComments
+                    ? dispatch(chooseAction(true, SET_ALL_COMMENTS))
+                    : dispatch(chooseAction(false, SET_ALL_COMMENTS))
+                }
+              />
+              <SendOutlined
+                className="post__icon"
+                onClick={() =>
+                  shareButton === "none"
+                    ? setShareButton("block")
+                    : setShareButton("none")
+                }
+              />
             </div>
-            <BookmarkBorderOutlined className="post__icon" />
+            <div className="post__likesCounter">{favCount} likes</div>
+            {bookmarkStatus ? (
+              <Bookmark
+                className="post__icon post__bookmarkStatus"
+                onClick={() => setBookmarkStatus(false)}
+              />
+            ) : (
+              <BookmarkBorderOutlined
+                className="post__icon"
+                onClick={bookmarkTweak}
+              />
+            )}
+          </div>
+          <div
+            className="post__shareContainer"
+            style={{ display: shareButton }}
+          >
+            <div className="post__shareGroup">
+              <WhatsappShareButton
+                className="post__shareIcons"
+                url={"http://insta-343f8.web.app/"}
+              >
+                <WhatsappIcon size={32} round={true} />
+              </WhatsappShareButton>
+              <FacebookShareButton
+                className="post__shareIcons"
+                url={"http://insta-343f8.web.app/"}
+              >
+                <FacebookIcon size={32} round={true} />
+              </FacebookShareButton>
+              <TelegramShareButton
+                className="post__shareIcons"
+                url={"http://insta-343f8.web.app/"}
+              >
+                <TelegramIcon size={32} round={true} />
+              </TelegramShareButton>
+              <TwitterShareButton url={"http://insta-343f8.web.app/"}>
+                <TwitterIcon size={32} round={true} />
+              </TwitterShareButton>
+              <PinterestShareButton
+                className="post__shareIcons"
+                url={"http://insta-343f8.web.app/"}
+              >
+                <PinterestIcon size={32} round={true} />
+              </PinterestShareButton>
+              <EmailShareButton
+                className="post__shareIcons"
+                url={"http://insta-343f8.web.app/"}
+              >
+                <EmailIcon size={32} round={true} />
+              </EmailShareButton>
+            </div>
           </div>
 
           <div className="post__content">
@@ -154,7 +291,9 @@ const Posts = ({ postId, username, imageUrl, caption, user, timestamp }) => {
             <Button
               className="post__commentShowMore"
               onClick={() =>
-                !allComments ? setAllComments(true) : setAllComments(false)
+                !allComments
+                  ? dispatch(chooseAction(true, SET_ALL_COMMENTS))
+                  : dispatch(chooseAction(false, SET_ALL_COMMENTS))
               }
             >
               {allComments ? (

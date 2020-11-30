@@ -2,6 +2,7 @@ import { actionTypes } from "../actions/actionTypes";
 
 export const initialState = {
   posts: [],
+  allComments: false,
 };
 
 const postReducer = (state = initialState, action) => {
@@ -11,6 +12,11 @@ const postReducer = (state = initialState, action) => {
       return {
         ...state,
         posts: action.posts,
+      };
+    case actionTypes.SET_ALL_COMMENTS:
+      return {
+        ...state,
+        allComments: action.allComments,
       };
     default:
       return state;

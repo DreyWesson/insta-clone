@@ -8,6 +8,7 @@ const actionTypes = {
   SET_EMAIL: "SET_EMAIL",
   SET_USERNAME: "SET_USERNAME",
   SET_SCROLL: "SET_SCROLL",
+  SET_OPEN_UPLOAD: "SET_OPEN_UPLOAD",
 };
 
 export { actionTypes };

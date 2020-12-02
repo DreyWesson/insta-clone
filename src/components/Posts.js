@@ -37,7 +37,7 @@ const Posts = ({ postId, username, imageUrl, caption, user, timestamp }) => {
   const [comments, setComments] = useState([]),
     [comment, setComment] = useState(""),
     dispatch = useDispatch(),
-    { SET_OPEN_SIGN_IN, SET_ALL_COMMENTS } = actionTypes,
+    { SET_OPEN_SIGN_IN } = actionTypes,
     [fav, setFav] = useState(false),
     [favCount, setFavCount] = useState((Math.random() * 5000) | 0),
     [bookmark, setBookmark] = useState("none"),
@@ -178,49 +178,6 @@ const Posts = ({ postId, username, imageUrl, caption, user, timestamp }) => {
               <p className="post__bookmarkCollection">Saved to collection</p>
             </div>
           </div>
-
-          <div className="post__icons">
-            <div className="post__iconsGrouped">
-              {fav ? (
-                <Favorite
-                  className="post__icon post__iconFav"
-                  onClick={decrementFav}
-                />
-              ) : (
-                <FavoriteBorderOutlined
-                  className="post__icon"
-                  onClick={incrementFav}
-                />
-              )}
-
-              <ChatBubbleOutlineOutlined
-                className={`post__icon ${allComments && "post__allComments"}`}
-                onClick={() =>
-                  !allComments ? setAllComments(true) : setAllComments(false)
-                }
-              />
-              <SendOutlined
-                className={`post__icon ${shareButton==="block" && "post__sendButton"}`}
-                onClick={() =>
-                  shareButton === "none"
-                    ? setShareButton("block")
-                    : setShareButton("none")
-                }
-              />
-            </div>
-            <div className="post__likesCounter">{favCount} likes</div>
-            {bookmarkStatus ? (
-              <Bookmark
-                className="post__icon post__bookmarkStatus"
-                onClick={() => setBookmarkStatus(false)}
-              />
-            ) : (
-              <BookmarkBorderOutlined
-                className="post__icon"
-                onClick={bookmarkTweak}
-              />
-            )}
-          </div>
           <div
             className="post__shareContainer"
             style={{ display: shareButton }}
@@ -260,6 +217,50 @@ const Posts = ({ postId, username, imageUrl, caption, user, timestamp }) => {
                 <EmailIcon size={32} round={true} />
               </EmailShareButton>
             </div>
+          </div>
+          <div className="post__icons">
+            <div className="post__iconsGrouped">
+              {fav ? (
+                <Favorite
+                  className="post__icon post__iconFav"
+                  onClick={decrementFav}
+                />
+              ) : (
+                <FavoriteBorderOutlined
+                  className="post__icon"
+                  onClick={incrementFav}
+                />
+              )}
+
+              <ChatBubbleOutlineOutlined
+                className={`post__icon ${allComments && "post__allComments"}`}
+                onClick={() =>
+                  !allComments ? setAllComments(true) : setAllComments(false)
+                }
+              />
+              <SendOutlined
+                className={`post__icon ${
+                  shareButton === "block" && "post__sendButton"
+                }`}
+                onClick={() =>
+                  shareButton === "none"
+                    ? setShareButton("block")
+                    : setShareButton("none")
+                }
+              />
+            </div>
+            <div className="post__likesCounter">{favCount} likes</div>
+            {bookmarkStatus ? (
+              <Bookmark
+                className="post__icon post__bookmarkStatus"
+                onClick={() => setBookmarkStatus(false)}
+              />
+            ) : (
+              <BookmarkBorderOutlined
+                className="post__icon"
+                onClick={bookmarkTweak}
+              />
+            )}
           </div>
 
           <div className="post__content">

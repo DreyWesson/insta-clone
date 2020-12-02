@@ -22,9 +22,10 @@ const chooseAction = (data, actionType) => {
       return setActionTo("open");
     case "SET_OPEN_SIGN_IN":
       return setActionTo("openSignIn");
-
     case "SET_SCROLL":
       return setActionTo("hideOnScroll");
+    case "SET_OPEN_UPLOAD":
+      return setActionTo("openUpload");
     default:
       break;
   }

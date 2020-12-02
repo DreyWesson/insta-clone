@@ -49,15 +49,19 @@ const Header = () => {
 
   const signUp = (e) => {
     e.preventDefault();
-    auth
-      .createUserWithEmailAndPassword(email, password)
-      .then((authUser) => {
-        return authUser.user.updateProfile({
-          displayName: username,
-        });
-      })
-      .catch((err) => alert(err.message));
-    dispatch(chooseAction(false, SET_OPEN));
+    if (username && email && password) {
+      auth
+        .createUserWithEmailAndPassword(email, password)
+        .then((authUser) => {
+          return authUser.user.updateProfile({
+            displayName: username,
+          });
+        })
+        .catch((err) => alert(err.message));
+      dispatch(chooseAction(false, SET_OPEN));
+    } else {
+      alert("Input field(s) can't be empty");
+    }
   };
   const signIn = (e) => {
     e.preventDefault();

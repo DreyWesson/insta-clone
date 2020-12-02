@@ -3,6 +3,7 @@ import { actionTypes } from "../actions/actionTypes";
 export const initialState = {
   open: false,
   openSignIn: false,
+  openUpload: false,
 };
 
 const openReducer = (state = initialState, action) => {
@@ -17,6 +18,11 @@ const openReducer = (state = initialState, action) => {
       return {
         ...state,
         openSignIn: action.openSignIn,
+      };
+    case actionTypes.SET_OPEN_UPLOAD:
+      return {
+        ...state,
+        openUpload: action.openUpload,
       };
     default:
       return state;

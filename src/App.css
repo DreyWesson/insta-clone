@@ -2,3 +2,22 @@
   background-color: #f8f9fa;
   min-height: 100vh;
 }
+
+.app__cameraContainer {
+  color: dodgerblue;
+  display: flex;
+  /* justify-content: flex-end; */
+  align-items: center;
+  position: sticky;
+  left: -100px;
+  bottom: 30px;
+}
+.app__camera {
+  position: absolute;
+  right: 30px;
+  padding: 10px;
+}
+.makeStyles-paper-1 {
+  outline-width: 0;
+  border: none !important;
+}

@@ -3,12 +3,16 @@ import React, { useState } from "react";
 import { Button } from "@material-ui/core";
 import db, { storage } from "../firebase";
 import firebase from "firebase";
+import { actionTypes } from "../actions/actionTypes";
+import { chooseAction } from "../actions/actions";
+import { useDispatch } from "react-redux";
 
 const ImageUpload = ({ username }) => {
   // console.log("UPLOAD USERNAME", username);
   const [caption, setCaption] = useState(""),
     [image, setImage] = useState(null),
-    [progress, setProgress] = useState(0);
+    [progress, setProgress] = useState(0),
+    dispatch = useDispatch();
 
   const handleChange = (e) => {
     e.target.files[0] && setImage(e.target.files[0]);
@@ -42,6 +46,7 @@ const ImageUpload = ({ username }) => {
             setImage(null);
             setProgress(0);
             setCaption("");
+            dispatch(chooseAction(false, actionTypes.SET_OPEN_UPLOAD));
           })
           .catch((err) => alert(err.message));
       }

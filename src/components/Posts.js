@@ -200,7 +200,7 @@ const Posts = ({ postId, username, imageUrl, caption, user, timestamp }) => {
                 }
               />
               <SendOutlined
-                className="post__icon"
+                className={`post__icon ${shareButton==="block" && "post__sendButton"}`}
                 onClick={() =>
                   shareButton === "none"
                     ? setShareButton("block")

@@ -13,11 +13,6 @@ const postReducer = (state = initialState, action) => {
         ...state,
         posts: action.posts,
       };
-    case actionTypes.SET_ALL_COMMENTS:
-      return {
-        ...state,
-        allComments: action.allComments,
-      };
     default:
       return state;
   }

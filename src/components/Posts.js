@@ -38,24 +38,19 @@ const Posts = ({ postId, username, imageUrl, caption, user, timestamp }) => {
     [comment, setComment] = useState(""),
     dispatch = useDispatch(),
     { SET_OPEN_SIGN_IN, SET_ALL_COMMENTS } = actionTypes,
-    // [allComments, setAllComments] = useState(false),
     [fav, setFav] = useState(false),
     [favCount, setFavCount] = useState((Math.random() * 5000) | 0),
     [bookmark, setBookmark] = useState("none"),
     [bookmarkStatus, setBookmarkStatus] = useState(false),
-    [opacityDisplay, setOpacityDisplay] = useState(0);
-  const [shareButton, setShareButton] = useState("none");
-
-  const { presentUser, allComments } = useSelector(
-    ({ userReducer, postReducer }) => {
-      let { user } = userReducer;
-      let { allComments } = postReducer;
-      return {
-        presentUser: user,
-        allComments,
-      };
-    }
-  );
+    [opacityDisplay, setOpacityDisplay] = useState(0),
+    [shareButton, setShareButton] = useState("none"),
+    [allComments, setAllComments] = useState(false);
+  const { presentUser } = useSelector(({ userReducer }) => {
+    let { user } = userReducer;
+    return {
+      presentUser: user,
+    };
+  });
 
   useEffect(() => {
     let unsubscribe;
@@ -124,13 +119,14 @@ const Posts = ({ postId, username, imageUrl, caption, user, timestamp }) => {
     }
   };
   const incrementFav = () => {
-    setFavCount(favCount + 1);
-    !fav && setFav(true);
-  };
-  const decrementFav = () => {
-    setFavCount(favCount - 1);
-    fav && setFav(false);
-  };
+      setFavCount(favCount + 1);
+      !fav && setFav(true);
+    },
+    decrementFav = () => {
+      setFavCount(favCount - 1);
+      fav && setFav(false);
+    };
+
   const bookmarkTweak = () => {
     setBookmark("block");
     setOpacityDisplay(1);
@@ -200,9 +196,7 @@ const Posts = ({ postId, username, imageUrl, caption, user, timestamp }) => {
               <ChatBubbleOutlineOutlined
                 className={`post__icon ${allComments && "post__allComments"}`}
                 onClick={() =>
-                  !allComments
-                    ? dispatch(chooseAction(true, SET_ALL_COMMENTS))
-                    : dispatch(chooseAction(false, SET_ALL_COMMENTS))
+                  !allComments ? setAllComments(true) : setAllComments(false)
                 }
               />
               <SendOutlined
@@ -291,9 +285,7 @@ const Posts = ({ postId, username, imageUrl, caption, user, timestamp }) => {
             <Button
               className="post__commentShowMore"
               onClick={() =>
-                !allComments
-                  ? dispatch(chooseAction(true, SET_ALL_COMMENTS))
-                  : dispatch(chooseAction(false, SET_ALL_COMMENTS))
+                !allComments ? setAllComments(true) : setAllComments(false)
               }
             >
               {allComments ? (

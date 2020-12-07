@@ -7,6 +7,7 @@ import { Button, Modal } from "@material-ui/core";
 import { actionTypes } from "../actions/actionTypes";
 import { chooseAction } from "../actions/actions";
 import { getModalStyle, useStyles } from "../modal";
+import FlipMove from "react-flip-move";
 
 const Poster = () => {
   const { user, posts, openUpload } = useSelector(
@@ -52,19 +53,21 @@ const Poster = () => {
           </Button>
         </div>
       )}
-      {posts?.map(({ id, username, imageUrl, caption, timestamp }) => {
-        return (
-          <Posts
-            key={id}
-            postId={id}
-            user={user}
-            timestamp={timestamp}
-            username={username}
-            imageUrl={imageUrl}
-            caption={caption}
-          />
-        );
-      })}
+      <FlipMove>
+        {posts?.map(({ id, username, imageUrl, caption, timestamp }) => {
+          return (
+            <Posts
+              key={id}
+              postId={id}
+              user={user}
+              timestamp={timestamp}
+              username={username}
+              imageUrl={imageUrl}
+              caption={caption}
+            />
+          );
+        })}
+      </FlipMove>
     </div>
   );
 };

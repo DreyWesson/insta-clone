@@ -1,6 +1,6 @@
-import "./Poster.css";
+import "./styles/Poster.css";
 import React, { useState } from "react";
-import ImageUpload from "./ImageUpload";
+import { ImageUpload } from "./ImageUpload";
 import Posts from "./Posts";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Modal } from "@material-ui/core";
@@ -9,7 +9,7 @@ import { chooseAction } from "../actions/actions";
 import { getModalStyle, useStyles } from "../modal";
 import FlipMove from "react-flip-move";
 
-const Poster = () => {
+export const Poster = () => {
   const { user, posts, openUpload } = useSelector(
     ({ userReducer, postReducer, openReducer }) => {
       let { user } = userReducer,

@@ -1,4 +1,4 @@
-import "./ImageUpload.css";
+import "./styles/ImageUpload.css";
 import React, { useState } from "react";
 import { Button } from "@material-ui/core";
 import db, { storage } from "../firebase";
@@ -7,7 +7,7 @@ import { actionTypes } from "../actions/actionTypes";
 import { chooseAction } from "../actions/actions";
 import { useDispatch } from "react-redux";
 
-const ImageUpload = ({ username }) => {
+export const ImageUpload = ({ username }) => {
   // console.log("UPLOAD USERNAME", username);
   const [caption, setCaption] = useState(""),
     [image, setImage] = useState(null),
@@ -87,4 +87,4 @@ const ImageUpload = ({ username }) => {
   );
 };
 
-export default ImageUpload;
+// export default ImageUpload;

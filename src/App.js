@@ -1,10 +1,9 @@
 import { useEffect } from "react";
 import "./App.css";
-import Header from "./components/Header";
+import { Header, Poster } from "./components/";
 import db, { auth } from "./firebase";
 import InstagramEmbed from "react-instagram-embed";
 import { useDispatch, useSelector } from "react-redux";
-import Poster from "./components/Poster";
 import { actionTypes } from "./actions/actionTypes";
 import { chooseAction } from "./actions/actions";
 import { CameraAlt } from "@material-ui/icons";

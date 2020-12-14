@@ -2,7 +2,7 @@ import { Avatar, Button } from "@material-ui/core";
 import React, { forwardRef, useEffect, useState } from "react";
 import firebase from "firebase";
 import db from "../firebase";
-import "./Posts.css";
+import "./styles/Posts.css";
 import {
   Bookmark,
   BookmarkBorderOutlined,
@@ -33,7 +33,7 @@ import {
   WhatsappIcon,
 } from "react-share";
 
-const Posts = forwardRef(
+export const Posts = forwardRef(
   ({ postId, username, imageUrl, caption, user, timestamp }, ref) => {
     const [comments, setComments] = useState([]),
       [comment, setComment] = useState(""),

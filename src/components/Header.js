@@ -1,7 +1,7 @@
 import { Button, Input } from "@material-ui/core";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import "./Header.css";
+import "./styles/Header.css";
 import { auth } from "../firebase";
 import { getModalStyle, useStyles } from "../modal";
 import Modal from "@material-ui/core/Modal";
@@ -9,7 +9,7 @@ import { actionTypes } from "../actions/actionTypes";
 import { chooseAction } from "../actions/actions";
 import { useScrollPosition } from "../scroll";
 
-const Header = () => {
+export const Header = () => {
   const dispatch = useDispatch();
   const { user, username, email, password, open, openSignIn } = useSelector(
     ({ userReducer, openReducer }) => {
@@ -196,4 +196,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+// export Header;
